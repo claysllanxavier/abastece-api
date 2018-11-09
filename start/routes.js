@@ -28,6 +28,6 @@ Route
     /**
      * Others Routes
      */
-    Route.get('states/cities/:id', 'StateController.showCities')
+    Route.get('states/:id/cities', 'StateController.showCities')
   })
   .prefix('api/v1')

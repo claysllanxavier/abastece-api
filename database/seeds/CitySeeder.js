@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| StateSeeder
+| CitySeeder
 |--------------------------------------------------------------------------
 |
 | Make use of the Factory instance to seed database with dummy data or
@@ -12,12 +12,12 @@
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory')
-const State = use('App/Models/State')
+const City = use('App/Models/City')
 
-class StateSeeder {
+class CitySeeder {
   async run () {
-    await State.create({"id": 27, "name": "Tocantins", "uf": "TO"})
+    await City.create({'name': 'Palmas', 'state_id': 27})
   }
 }
 
-module.exports = StateSeeder
+module.exports = CitySeeder

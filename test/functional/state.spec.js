@@ -75,14 +75,18 @@ test('test delete user', async ({ client }) => {
   const response = await client.delete(`/api/v1/states/${id}`).end()
   response.assertStatus(204)
 })
+test('test error show cities of state no exist', async ({ client }) => {
 
+  const response = await client.get('/api/v1/states/1000/cities').end()
+  response.assertStatus(404)
+})
 test('test show cities of state', async ({ client }) => {
   const state = await Factory.model('App/Models/State').create()
   const cities = await Factory.model('App/Models/City').makeMany(10)
   await state.cities().saveMany(cities)
   const {id} = state
 
-  const response = await client.get(`/api/v1/states/cities/${id}`).end()
+  const response = await client.get(`/api/v1/states/${id}/cities`).end()
   response.assertStatus(200)
   response.assertJSONSubset([{
     name: cities[0].name,
