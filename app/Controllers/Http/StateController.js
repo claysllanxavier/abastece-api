@@ -91,6 +91,20 @@ class StateController {
 
     await state.delete()
   }
+
+
+  /**
+   * Display the specified resource.
+   */
+   async showCities({request, response, params}) {
+    const {id} = params
+
+    const state = await State.findOrFail(id)
+    const cities = await state.cities().fetch()
+
+    return cities
+  }
+
 }
 
 module.exports = StateController

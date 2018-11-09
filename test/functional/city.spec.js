@@ -96,9 +96,13 @@ test('test error delete city no exist', async ({ client }) => {
   const response = await client.delete(`/api/v1/cities/10000`).end()
   response.assertStatus(404)
 })
-test('test delete user', async ({ client }) => {
-  const city = await Factory.model('App/Models/City').create()
+test('test delete city', async ({ client }) => {
+  const state = await Factory.model('App/Models/State').create()
+  const city = await Factory.model('App/Models/City').make()
+  await city.state().associate(state)
+
   const {id} = city
+
   const response = await client.delete(`/api/v1/cities/${id}`).end()
   response.assertStatus(204)
 })

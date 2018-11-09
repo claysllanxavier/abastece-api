@@ -19,8 +19,15 @@ const Route = use('Route')
 
 Route
   .group(() => {
+    /**
+     * Routes Resources
+    */
     Route.resource('states', 'StateController').apiOnly()
     Route.resource('cities', 'CityController').apiOnly()
     Route.resource('users', 'UserController').apiOnly()
+    /**
+     * Others Routes
+     */
+    Route.get('states/cities/:id', 'StateController.showCities')
   })
   .prefix('api/v1')

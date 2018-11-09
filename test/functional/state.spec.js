@@ -16,7 +16,6 @@ test('test get list of states', async ({ client }) => {
     uf: state.uf
   }])
 })
-
 test('test save state', async ({ client }) => {
 
   const data = {
@@ -30,13 +29,11 @@ test('test save state', async ({ client }) => {
     uf: 'IA'
   })
 })
-
 test('test error show state no exist', async ({ client }) => {
 
   const response = await client.get('/api/v1/states/1000').end()
   response.assertStatus(404)
 })
-
 test('test show state', async ({ client }) => {
   const state = await Factory.model('App/Models/State').create()
   const {id, name, uf} = state
@@ -77,4 +74,18 @@ test('test delete user', async ({ client }) => {
   const {id} = state
   const response = await client.delete(`/api/v1/states/${id}`).end()
   response.assertStatus(204)
+})
+
+test('test show cities of state', async ({ client }) => {
+  const state = await Factory.model('App/Models/State').create()
+  const cities = await Factory.model('App/Models/City').makeMany(10)
+  await state.cities().saveMany(cities)
+  const {id} = state
+
+  const response = await client.get(`/api/v1/states/cities/${id}`).end()
+  response.assertStatus(200)
+  response.assertJSONSubset([{
+    name: cities[0].name,
+    state_id: cities[0].state_id
+  }])
 })
