@@ -26,3 +26,9 @@ Factory.blueprint('App/Models/State', (faker) => {
     uf: faker.state()
   }
 })
+
+Factory.blueprint('App/Models/City', (faker) => {
+  return {
+    name: faker.city()
+  }
+})
