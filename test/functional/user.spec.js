@@ -108,3 +108,26 @@ test('test delete user', async ({ client }) => {
   const response = await client.delete(`/api/v1/users/${user.id}`).end()
   response.assertStatus(204)
 })
+test('test login user', async ({ client }) => {
+  const user = await Factory.model('App/Models/User').make()
+  const {email, password} = user
+  await user.save()
+  const data = {
+    email: email,
+    password: password
+  }
+  const response = await client.post('/api/v1/sessions/').send(data).end()
+  response.assertStatus(200)
+  response.assertJSONSubset({
+  type: 'bearer'
+  })
+})
+test('test login user error', async ({ client }) => {
+  const user = await Factory.model('App/Models/User').create()
+  const data = {
+    email: 'fakeruser@app.com',
+    password: 'password'
+  }
+  const response = await client.post('/api/v1/sessions/').send(data).end()
+  response.assertStatus(401)
+})
