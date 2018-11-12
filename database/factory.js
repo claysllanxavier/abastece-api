@@ -42,3 +42,9 @@ Factory.blueprint('App/Models/City', (faker) => {
     }
   }
 })
+
+Factory.blueprint('App/Models/Type', (faker) => {
+  return {
+    name: faker.word()
+  }
+})

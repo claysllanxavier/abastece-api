@@ -25,6 +25,7 @@ Route
     Route.resource('states', 'StateController').apiOnly()
     Route.resource('cities', 'CityController').apiOnly()
     Route.resource('users', 'UserController').apiOnly()
+    Route.resource('types', 'TypeController').apiOnly()
     /**
      * Others Routes
      */
