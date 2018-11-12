@@ -90,6 +90,8 @@ class StateController {
     const state = await State.findOrFail(id)
 
     await state.delete()
+
+    return response.status(204).json(null)
   }
 
 

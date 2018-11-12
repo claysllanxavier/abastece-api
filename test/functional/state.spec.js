@@ -81,10 +81,8 @@ test('test error show cities of state no exist', async ({ client }) => {
   response.assertStatus(404)
 })
 test('test show cities of state', async ({ client }) => {
-  const state = await Factory.model('App/Models/State').create()
-  const cities = await Factory.model('App/Models/City').makeMany(10)
-  await state.cities().saveMany(cities)
-  const {id} = state
+  const cities = await Factory.model('App/Models/City').createMany(5)
+  const id = cities[0].state_id
 
   const response = await client.get(`/api/v1/states/${id}/cities`).end()
   response.assertStatus(200)

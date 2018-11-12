@@ -89,6 +89,8 @@ class CityController {
     const city = await City.findOrFail(id)
 
     await city.delete()
+
+    return response.status(204).json(null)
   }
 }
 

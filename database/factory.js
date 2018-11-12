@@ -13,12 +13,19 @@
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
  const Factory = use('Factory')
+ const Hash = use('Hash')
 
-// Factory.blueprint('App/Models/User', (faker) => {
-//   return {
-//     username: faker.username()
-//   }
-// })
+ Factory.blueprint('App/Models/User', async (faker) => {
+  return {
+    first_name: faker.first(),
+    last_name: faker.last(),
+    email: faker.email(),
+    password: await Hash.make(faker.password()),
+    city_id: async () => {
+      return (await Factory.model('App/Models/City').create()).id
+    }
+  }
+})
 
 Factory.blueprint('App/Models/State', (faker) => {
   return {
@@ -29,6 +36,9 @@ Factory.blueprint('App/Models/State', (faker) => {
 
 Factory.blueprint('App/Models/City', (faker) => {
   return {
-    name: faker.city()
+    name: faker.city(),
+    state_id: async () => {
+      return (await Factory.model('App/Models/State').create()).id
+    }
   }
 })

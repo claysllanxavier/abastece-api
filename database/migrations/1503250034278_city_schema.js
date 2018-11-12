@@ -9,7 +9,7 @@ class CitySchema extends Schema {
       table.increments()
       table.string('name').notNullable()
       table.integer('state_id').unsigned().index().notNullable()
-      table.foreign('state_id').references('State.id').onDelete('CASCADE');
+      table.foreign('state_id').references('id').inTable('states').onDelete('CASCADE')
       table.timestamps()
     })
   }

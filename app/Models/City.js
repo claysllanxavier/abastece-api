@@ -4,8 +4,19 @@
 const Model = use('Model')
 
 class City extends Model {
+
+  /**
+   *
+   *
+   * @returns
+   * @memberof City
+   */
   state () {
     return this.belongsTo('App/Models/State')
+  }
+
+  users(){
+    return this.hasMany('App/Model/User')
   }
 }
 

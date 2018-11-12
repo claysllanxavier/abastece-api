@@ -33,7 +33,7 @@ class UserController {
    */
   async store ({ request, response }) {
 
-    const data = request.only(['first_name', 'last_name', 'email', 'phone', 'password'])
+    const data = request.post()
 
     const user = await User.create(data)
 
@@ -71,9 +71,9 @@ class UserController {
 
     const user = await User.findOrFail(id)
 
-    const data = request.only(['first_name', 'last_name', 'email', 'phone'])
+    const data = request.post()
 
-    user.merge(data)
+    await user.merge(data)
 
     return user
   }
@@ -91,7 +91,7 @@ class UserController {
 
     const user = await User.findOrFail(id)
 
-    user.delete()
+    await user.delete()
 
     return response.status(204).json(null)
   }
