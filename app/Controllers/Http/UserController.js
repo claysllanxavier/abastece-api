@@ -17,7 +17,7 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async index ({ request, response }) {
+  async index () {
     const users = await User.all()
 
     return users
@@ -31,8 +31,7 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
-
+  async store ({ request }) {
     const data = request.post()
 
     const user = await User.create(data)
@@ -49,13 +48,12 @@ class UserController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response }) {
-
-    const id = params.id;
+  async show ({ params }) {
+    const { id } = params
 
     const user = await User.findOrFail(id)
 
-    return user;
+    return user
   }
 
   /**
@@ -66,8 +64,8 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
-    const id = params.id;
+  async update ({ params, request }) {
+    const { id } = params
 
     const user = await User.findOrFail(id)
 
@@ -86,8 +84,8 @@ class UserController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
-    const id = params.id;
+  async destroy ({ params, response }) {
+    const { id } = params
 
     const user = await User.findOrFail(id)
 

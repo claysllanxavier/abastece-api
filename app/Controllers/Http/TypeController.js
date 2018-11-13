@@ -17,7 +17,7 @@ class TypeController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response }) {
+  async index () {
     const types = await Type.all()
 
     return types
@@ -31,7 +31,7 @@ class TypeController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request }) {
     const data = request.post()
 
     const type = await Type.create(data)
@@ -48,8 +48,8 @@ class TypeController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response }) {
-    const {id} = params
+  async show ({ params }) {
+    const { id } = params
 
     const type = await Type.findOrFail(id)
 
@@ -64,10 +64,10 @@ class TypeController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request }) {
     const data = request.post()
 
-    const {id} = params
+    const { id } = params
 
     const type = await Type.findOrFail(id)
 
@@ -84,8 +84,8 @@ class TypeController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
-    const {id} = params
+  async destroy ({ params, response }) {
+    const { id } = params
 
     const type = await Type.findOrFail(id)
 

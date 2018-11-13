@@ -5,7 +5,7 @@ const Schema = use('Schema')
 
 class CitySchema extends Schema {
   up () {
-    this.create('cities', (table) => {
+    this.create('cities', table => {
       table.increments()
       table.string('name').notNullable()
       table.integer('state_id').unsigned().index().notNullable()

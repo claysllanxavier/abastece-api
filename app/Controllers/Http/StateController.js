@@ -17,7 +17,7 @@ class StateController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response}) {
+  async index () {
     const states = State.all()
 
     return states
@@ -31,7 +31,7 @@ class StateController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request }) {
     const data = request.post()
 
     const state = await State.create(data)
@@ -48,8 +48,8 @@ class StateController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response }) {
-    const id = params.id
+  async show ({ params }) {
+    const { id } = params
 
     const state = await State.findOrFail(id)
 
@@ -64,8 +64,8 @@ class StateController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
-    const {id} = params
+  async update ({ params, request }) {
+    const { id } = params
 
     const state = await State.findOrFail(id)
 
@@ -84,8 +84,8 @@ class StateController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
-    const {id} = params
+  async destroy ({ params, response }) {
+    const { id } = params
 
     const state = await State.findOrFail(id)
 
@@ -98,15 +98,14 @@ class StateController {
   /**
    * Display the specified resource.
    */
-   async showCities({request, response, params}) {
-    const {id} = params
+  async showCities ({ params }) {
+    const { id } = params
 
     const state = await State.findOrFail(id)
     const cities = await state.cities().fetch()
 
     return cities
   }
-
 }
 
 module.exports = StateController

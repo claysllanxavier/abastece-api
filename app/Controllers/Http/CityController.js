@@ -17,7 +17,7 @@ class CityController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response}) {
+  async index () {
     const cities = await City.all()
 
     return cities
@@ -31,7 +31,7 @@ class CityController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request }) {
     const data = request.post()
 
     const city = await City.create(data)
@@ -48,8 +48,8 @@ class CityController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response }) {
-    const {id} = params
+  async show ({ params }) {
+    const { id } = params
 
     const city = await City.findOrFail(id)
 
@@ -64,11 +64,11 @@ class CityController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
-    const {id} = params
+  async update ({ params, request }) {
+    const { id } = params
     const data = request.post()
 
-    const city= await City.findOrFail(id)
+    const city = await City.findOrFail(id)
 
     await city.merge(data)
 
@@ -83,8 +83,8 @@ class CityController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
-    const {id} = params
+  async destroy ({ params, response }) {
+    const { id } = params
 
     const city = await City.findOrFail(id)
 

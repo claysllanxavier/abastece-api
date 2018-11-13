@@ -4,7 +4,6 @@
 const Model = use('Model')
 
 class City extends Model {
-
   /**
    *
    *
@@ -15,7 +14,7 @@ class City extends Model {
     return this.belongsTo('App/Models/State')
   }
 
-  users(){
+  users () {
     return this.hasMany('App/Model/User')
   }
 }

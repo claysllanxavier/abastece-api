@@ -2,8 +2,6 @@
 
 const { test, trait } = use('Test/Suite')('User')
 const Factory = use('Factory')
-const User = use('App/Models/User')
-const City = use('App/Models/City')
 
 trait('Test/ApiClient')
 
@@ -47,16 +45,14 @@ test('test show user', async ({ client, assert }) => {
     last_name: user.last_name,
     email: user.email
   })
-  assert.notExists(response.body.password);
+  assert.notExists(response.body.password)
 })
 test('test error show user no exist', async ({ client }) => {
-
   const response = await client.get('/api/v1/users/1000').end()
 
   response.assertStatus(404)
 })
 test('test error edit user no exist', async ({ client }) => {
-
   const data = {}
 
   const response = await client.put('/api/v1/users/1000').send(data).end()
@@ -69,7 +65,7 @@ test('test edit user', async ({ client }) => {
   const data = {
     first_name: 'Helmer',
     last_name: 'Rempel',
-    email: 'Cordelia13@yahoo.com',
+    email: 'Cordelia13@yahoo.com'
   }
   const response = await client.put(`/api/v1/users/${id}`).send(data).end()
   response.assertStatus(200)
@@ -83,10 +79,8 @@ test('test edit user', async ({ client }) => {
 test('test edit city field city', async ({ client, assert }) => {
   const city = await Factory.model('App/Models/City').create()
   const user = await Factory.model('App/Models/User').create()
-  const {id} = user
-  const data = {
-   city_id: city.id
-  }
+  const { id } = user
+  const data = { city_id: city.id }
   const response = await client.put(`/api/v1/users/${id}`).send(data).end()
   response.assertStatus(200)
   response.assertJSONSubset({
@@ -98,7 +92,6 @@ test('test edit city field city', async ({ client, assert }) => {
   assert.notEqual(user.city_id, response.body.city_id)
 })
 test('test error delete user no exist', async ({ client }) => {
-
   const response = await client.delete('/api/v1/users/1000').end()
 
   response.assertStatus(404)
@@ -110,20 +103,18 @@ test('test delete user', async ({ client }) => {
 })
 test('test login user', async ({ client }) => {
   const user = await Factory.model('App/Models/User').make()
-  const {email, password} = user
+  const { email, password } = user
   await user.save()
   const data = {
-    email: email,
-    password: password
+    email,
+    password
   }
   const response = await client.post('/api/v1/sessions/').send(data).end()
   response.assertStatus(200)
-  response.assertJSONSubset({
-  type: 'bearer'
-  })
+  response.assertJSONSubset({ type: 'bearer' })
 })
 test('test login user error', async ({ client }) => {
-  const user = await Factory.model('App/Models/User').create()
+  await Factory.model('App/Models/User').create()
   const data = {
     email: 'fakeruser@app.com',
     password: 'password'
