@@ -33,4 +33,13 @@ Factory.blueprint('App/Models/City', faker => ({
   state_id: async () => (await Factory.model('App/Models/State').create()).id
 }))
 
-Factory.blueprint('App/Models/Type', faker => ({name: faker.word()}))
+Factory.blueprint('App/Models/Type', faker => ({ name: faker.word() }))
+
+Factory.blueprint('App/Models/GasStation', faker => ({
+  name: faker.name(),
+  address: faker.address(),
+  latitude: faker.integer(),
+  longitude: faker.integer(),
+  phone: faker.phone(),
+  type_id: async () => (await Factory.model('App/Models/Type').create()).id
+}))

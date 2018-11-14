@@ -3,7 +3,7 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
-
+const GasStation = use('App/Models/GasStation')
 /**
  * Resourceful controller for interacting with gasstations
  */
@@ -17,19 +17,10 @@ class GasStationController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
-  }
+  async index ({ request }) {
+    const gasStations = await GasStation.query().paginate(request.input('page', 1), 10)
 
-  /**
-   * Render a form to be used for creating a new gasstation.
-   * GET gasstations/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+    return gasStations
   }
 
   /**
@@ -40,7 +31,12 @@ class GasStationController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request }) {
+    const data = request.post()
+
+    const gas = await GasStation.create(data)
+
+    return gas
   }
 
   /**
@@ -52,19 +48,12 @@ class GasStationController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-  }
+  async show ({ params }) {
+    const { id } = params
 
-  /**
-   * Render a form to update an existing gasstation.
-   * GET gasstations/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
+    const gas = await GasStation.findOrFail(id)
+
+    return gas
   }
 
   /**
@@ -75,7 +64,16 @@ class GasStationController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request }) {
+    const { id } = params
+
+    const data = request.post()
+
+    const gas = await GasStation.findOrFail(id)
+
+    await gas.merge(data)
+
+    return gas
   }
 
   /**
@@ -86,7 +84,14 @@ class GasStationController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params, response }) {
+    const { id } = params
+
+    const gas = await GasStation.findOrFail(id)
+
+    await gas.delete()
+
+    return response.status(204).json(null)
   }
 }
 
