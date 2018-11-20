@@ -18,7 +18,7 @@ class GasStationController {
    * @param {View} ctx.view
    */
   async index ({ request }) {
-    const gasStations = await GasStation.query().with('fuels').paginate(request.input('page', 1), 10)
+    const gasStations = await GasStation.query().paginate(request.input('page', 1), 10)
 
     return gasStations
   }
