@@ -93,19 +93,6 @@ class StateController {
 
     return response.status(204).json(null)
   }
-
-
-  /**
-   * Display the specified resource.
-   */
-  async showCities ({ params }) {
-    const { id } = params
-
-    const state = await State.findOrFail(id)
-    const cities = await state.cities().fetch()
-
-    return cities
-  }
 }
 
 module.exports = StateController

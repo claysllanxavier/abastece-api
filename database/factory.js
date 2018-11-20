@@ -43,3 +43,5 @@ Factory.blueprint('App/Models/GasStation', faker => ({
   phone: faker.phone(),
   type_id: async () => (await Factory.model('App/Models/Type').create()).id
 }))
+
+Factory.blueprint('App/Models/Fuel', faker => ({ name: faker.word() }))

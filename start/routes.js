@@ -30,7 +30,6 @@ Route
     /**
      * Others Routes
      */
-    Route.get('states/:id/cities', 'StateController.showCities')
     Route.post('/sessions', 'SessionController.create')
   })
   .prefix('api/v1')

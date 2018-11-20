@@ -17,8 +17,11 @@ class CityController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index () {
-    const cities = await City.all()
+  async index ({request}) {
+    const state = request.input('state', null)
+    let cities ={}
+
+    cities = (state ? await City.query().where('state_id', state).fetch() : await City.all());
 
     return cities
   }
