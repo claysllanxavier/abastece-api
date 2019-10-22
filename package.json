@@ -22,18 +22,18 @@
     "@adonisjs/bodyparser": "^2.0.9",
     "@adonisjs/cors": "^1.0.7",
     "@adonisjs/fold": "^4.0.9",
-    "@adonisjs/framework": "^5.0.12",
+    "@adonisjs/framework": "^5.0.13",
     "@adonisjs/ignitor": "^2.0.8",
     "@adonisjs/lucid": "^6.1.3",
     "@adonisjs/vow": "^1.0.17"
   },
   "devDependencies": {
-    "eslint": "^5.3.0",
-    "eslint-config-airbnb": "17.1.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jsx-a11y": "^6.1.2",
-    "eslint-plugin-react": "^7.11.0",
-    "sqlite3": "^4.0.3"
+    "eslint": "^6.5.1",
+    "eslint-config-airbnb": "18.0.1",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.16.0",
+    "sqlite3": "^4.1.0"
   },
   "autoload": {
     "App": "./app"
