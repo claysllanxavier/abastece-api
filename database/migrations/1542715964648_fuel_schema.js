@@ -5,9 +5,9 @@ const Schema = use('Schema')
 
 class FuelSchema extends Schema {
   up () {
-    this.create('fuels', (table) => {
+    this.create('fuels', table => {
       table.increments()
-      table.string('name',50)
+      table.string('name', 50)
       table.timestamps()
     })
   }

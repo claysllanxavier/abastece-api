@@ -24,12 +24,10 @@ Route
     */
     Route.resource('states', 'StateController').apiOnly()
     Route.resource('cities', 'CityController').apiOnly()
-    Route.resource('users', 'UserController').apiOnly()
     Route.resource('types', 'TypeController').apiOnly()
     Route.resource('gas-stations', 'GasStationController').apiOnly()
     /**
      * Others Routes
      */
-    Route.post('/sessions', 'SessionController.create')
   })
   .prefix('api/v1')

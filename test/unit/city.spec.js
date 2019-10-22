@@ -15,6 +15,16 @@ test('test get list of cities', async ({ client }) => {
     state_id: city.state_id
   }])
 })
+test('test get list of cities of state', async ({ client }) => {
+  const city = await Factory.model('App/Models/City').create()
+
+  const response = await client.get(`/api/v1/cities?state=${city.state_id}`).end()
+  response.assertStatus(200)
+  response.assertJSONSubset([{
+    name: city.name,
+    state_id: city.state_id
+  }])
+})
 test('test save city', async ({ client }) => {
   const state = await Factory.model('App/Models/State').create()
   const data = {

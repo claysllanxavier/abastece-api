@@ -4,6 +4,7 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 const Type = use('App/Models/Type')
+const Helpers = use('Helpers')
 /**
  * Resourceful controller for interacting with types
  */
@@ -35,6 +36,22 @@ class TypeController {
     const data = request.post()
 
     const type = await Type.create(data)
+
+    const image = request.file('image', {
+      types: ['image'],
+      size: '2mb'
+    })
+
+    if (image) {
+      await image.move(Helpers.tmpPath('uploads'), { name: `${Date.now()}-${file.clientName}` })
+
+      if (!image.moved()) {
+        return image.errors()
+      }
+
+      type.image = image.fileName
+      await type.save()
+    }
 
     return type
   }

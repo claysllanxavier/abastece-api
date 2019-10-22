@@ -5,12 +5,13 @@ const Schema = use('Schema')
 
 class GasFuelSchema extends Schema {
   up () {
-    this.create('gas_fuels', (table) => {
+    this.create('gas_fuels', table => {
       table.increments()
       table.integer('gas_id').unsigned().index().notNullable()
       table.foreign('gas_id').references('id').inTable('gas_stations').onDelete('CASCADE')
       table.integer('fuel_id').unsigned().index().notNullable()
       table.foreign('fuel_id').references('id').inTable('fuels').onDelete('CASCADE')
+      table.decimal('price', 10, 3)
       table.timestamps()
     })
   }

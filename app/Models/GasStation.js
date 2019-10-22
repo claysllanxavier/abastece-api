@@ -8,8 +8,11 @@ class GasStation extends Model {
     return this.belongsTo('App/Models/Type')
   }
 
-  fuels(){
-    return this.belongsToMany('App/Model/Fuel').pivotTable('gas_fuels')
+  fuels () {
+    return this.belongsToMany('App/Model/Fuel', 'gas_id', 'fuel_id')
+      .pivotTable('gas_fuels')
+      .withTimestamps()
+      .withPivot(['price'])
   }
 }
 
