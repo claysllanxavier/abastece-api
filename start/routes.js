@@ -31,3 +31,5 @@ Route
      */
   })
   .prefix('api/v1')
+
+Route.get('images/:path', 'HomeController.show')

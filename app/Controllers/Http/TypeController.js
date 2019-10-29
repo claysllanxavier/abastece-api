@@ -3,8 +3,11 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
-const Type = use('App/Models/Type')
+const { validateAll } = use('Validator')
 const Helpers = use('Helpers')
+const fs = Helpers.promisify(require('fs'))
+
+const Type = use('App/Models/Type')
 /**
  * Resourceful controller for interacting with types
  */
@@ -32,7 +35,14 @@ class TypeController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request }) {
+  async store ({ request, response }) {
+    const rules = { name: 'required|max:40' }
+
+    const validation = await validateAll(request.all(), rules)
+
+    if (validation.fails()) {
+      return response.status(400).json(validation.messages())
+    }
     const data = request.post()
 
     const type = await Type.create(data)
@@ -43,7 +53,7 @@ class TypeController {
     })
 
     if (image) {
-      await image.move(Helpers.tmpPath('uploads'), { name: `${Date.now()}-${file.clientName}` })
+      await image.move(Helpers.tmpPath('uploads'), { name: `${Date.now()}-${image.clientName}` })
 
       if (!image.moved()) {
         return image.errors()
@@ -81,7 +91,15 @@ class TypeController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request }) {
+  async update ({ params, request, response }) {
+    const rules = { name: 'required|max:40' }
+
+    const validation = await validateAll(request.all(), rules)
+
+    if (validation.fails()) {
+      return response.status(400).json(validation.messages())
+    }
+
     const data = request.post()
 
     const { id } = params
@@ -89,6 +107,24 @@ class TypeController {
     const type = await Type.findOrFail(id)
 
     await type.merge(data)
+
+    const image = request.file('image', {
+      types: ['image'],
+      size: '2mb'
+    })
+
+    if (image) {
+      await fs.unlink(Helpers.tmpPath(`uploads/${type.image}`))
+      await image.move(Helpers.tmpPath('uploads'), { name: `${Date.now()}-${image.clientName}` })
+
+      if (!image.moved()) {
+        return image.errors()
+      }
+
+      type.image = image.fileName
+      await type.save()
+    }
+
 
     return type
   }
@@ -105,7 +141,9 @@ class TypeController {
     const { id } = params
 
     const type = await Type.findOrFail(id)
-
+    if (type.image) {
+      await fs.unlink(Helpers.tmpPath(`uploads/${type.image}`))
+    }
     await type.delete()
 
     return response.status(204).json(null)

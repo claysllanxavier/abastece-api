@@ -7,7 +7,7 @@ class TypeSchema extends Schema {
   up () {
     this.create('types', table => {
       table.increments()
-      table.string('name', 140).notNullable()
+      table.string('name', 40).notNullable()
       table.string('image', 255)
       table.timestamps()
     })
