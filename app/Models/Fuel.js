@@ -4,7 +4,7 @@
 const Model = use('Model')
 
 class Fuel extends Model {
-  gas(){
+  gas () {
     return this.belongsToMany('App/Model/GasStation').pivotTable('gas_fuels')
   }
 }

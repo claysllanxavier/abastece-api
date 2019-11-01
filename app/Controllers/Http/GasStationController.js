@@ -4,6 +4,7 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 const GasStation = use('App/Models/GasStation')
+const Database = use('Database')
 /**
  * Resourceful controller for interacting with gasstations
  */
@@ -18,7 +19,13 @@ class GasStationController {
    * @param {View} ctx.view
    */
   async index ({ request }) {
-    const gasStations = await GasStation.query().with('type', 'fuels').paginate(request.input('page', 1), 10)
+    const { latitude, longitude } = request.get()
+
+    const gasStations = await GasStation.query()
+      .nearBy(latitude, longitude, 40)
+      .with('type')
+      .with('fuels')
+      .paginate(request.input('page', 1), 10)
 
     return gasStations
   }
@@ -32,9 +39,16 @@ class GasStationController {
    * @param {Response} ctx.response
    */
   async store ({ request }) {
-    const data = request.post()
+    const data = request.except(['fuels'])
 
     const gas = await GasStation.create(data)
+
+    const fuels = request.input('fuels')
+    fuels.map(async fuel => {
+      await gas.fuels().attach(fuel.id, row => {
+        row.price = fuel.price
+      })
+    })
 
     return gas
   }
@@ -48,10 +62,23 @@ class GasStationController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params }) {
+  async show ({ params, request }) {
     const { id } = params
+    const { latitude, longitude } = request.all()
 
-    const gas = await GasStation.findOrFail(id)
+    const haversine = `(6371 * acos(cos(radians(${latitude}))
+    * cos(radians(latitude))
+    * cos(radians(longitude)
+    - radians(${longitude}))
+    + sin(radians(${latitude}))
+    * sin(radians(latitude))))`
+
+    const gas = await GasStation.query()
+      .select('*', Database.raw(`${haversine} as distance`))
+      .where('id', id)
+      .firstOrFail(id)
+
+    await gas.loadMany(['type', 'fuels'])
 
     return gas
   }

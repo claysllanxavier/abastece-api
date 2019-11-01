@@ -25,7 +25,7 @@ Route
     Route.resource('states', 'StateController').apiOnly()
     Route.resource('cities', 'CityController').apiOnly()
     Route.resource('types', 'TypeController').apiOnly()
-    Route.resource('gas-stations', 'GasStationController').apiOnly()
+    Route.resource('gas', 'GasStationController').apiOnly()
     /**
      * Others Routes
      */

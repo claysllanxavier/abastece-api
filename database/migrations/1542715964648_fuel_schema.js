@@ -7,7 +7,8 @@ class FuelSchema extends Schema {
   up () {
     this.create('fuels', table => {
       table.increments()
-      table.string('name', 50)
+      table.string('name', 20)
+      table.string('color', 7)
       table.timestamps()
     })
   }
