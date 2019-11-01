@@ -38,9 +38,9 @@ class GasStationSeeder {
           row.price = item.COMUM
         })
       }
-      if (item.ADITIVADA !== '*') {
+      if (item.ADTIVADA !== '*') {
         await gas.fuels().attach(5, row => {
-          row.price = item.ADITIVADA
+          row.price = item.ADTIVADA
         })
       }
       if (item.ETANOL !== '*') {
