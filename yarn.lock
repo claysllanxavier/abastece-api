@@ -73,6 +73,13 @@
   resolved "https://registry.yarnpkg.com/@adonisjs/cors/-/cors-1.0.7.tgz#9b7565ad0b80215c620e8864b4af8651220a527c"
   integrity sha512-jBO+bI/zdydAXURL02gQxXB57L5+eV2MUYp7zmDrVa12M6mQPMRz5TC2F7a0Kknx9JUr5dsl4+eN0XNfe/8sWQ==
 
+"@adonisjs/drive@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@adonisjs/drive/-/drive-1.0.4.tgz#0dd2a3a5be7bf60fe80bc03d066c48eca9251ade"
+  integrity sha512-p2Ot+ylOwtGV6gHIKIMJG0M+AxBatjnqv+UOrUW3Y8xsyN9bKg9khZTEqn7WrHUAlmeS4WUR5T68KIaxuXgRDw==
+  dependencies:
+    "@slynova/flydrive" "^0.3.1"
+
 "@adonisjs/fold@^4.0.9":
   version "4.0.9"
   resolved "https://registry.yarnpkg.com/@adonisjs/fold/-/fold-4.0.9.tgz#1a9860af2dbe29e4111d7f0cc234be15c2e28be8"
@@ -121,6 +128,14 @@
   dependencies:
     node-exceptions "^3.0.0"
     upcast "^2.1.1"
+
+"@adonisjs/generic-exceptions@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@adonisjs/generic-exceptions/-/generic-exceptions-3.0.1.tgz#57c55a912d72911c614f528a32a4b399feaf6a99"
+  integrity sha512-AHBSvgKj17cQYkj7QL7la8KCB6WeBQPyHlgzX9nimLPY9ViWWmwozuy2skEjsh7+XNIg8vQdZphJyoIf8QzzCQ==
+  dependencies:
+    node-exceptions "^4.0.1"
+    upcast "^4.0.0"
 
 "@adonisjs/ignitor@^2.0.8":
   version "2.0.8"
@@ -223,6 +238,16 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.7.0.tgz#9a06f4f137ee84d7df0460c1fdb1135ffa6c50fd"
   integrity sha512-ONhaKPIufzzrlNbqtWFFd+jlnemX6lJAgq9ZeiZtS7I1PIf/la7CW4m83rTXRnVnsMbW2k56pGYu7AUFJD9Pow==
 
+"@slynova/flydrive@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@slynova/flydrive/-/flydrive-0.3.1.tgz#7d89c43a90ef8599b29d5f7aadd9e82b6904e8ce"
+  integrity sha512-/C3chxZRqonxjQwj70WOyqtw0JGjBr6rjvkcrGlDedUXi5YoiJiTVHwD4ry6tHJKwOi3PtxpWO9RZwSKElVWzw==
+  dependencies:
+    create-output-stream "0.0.1"
+    fs-extra "^6.0.0"
+    node-exceptions "^3.0.0"
+    resetable "^1.0.2"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -259,6 +284,13 @@ acorn@^7.0.0, acorn@^7.1.0:
   version "7.1.0"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.1.0.tgz#949d36f2c292535da602283586c2477c57eb2d6c"
   integrity sha512-kL5CuoXA/dgxlBbVrflsflzQ3PAas7RYZB52NOm/6839iVYJgKMJ3cQJD+t2i5+qFa8h3MDpEOJiS64E8JLnSQ==
+
+adonis-lucid-filter@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/adonis-lucid-filter/-/adonis-lucid-filter-1.0.4.tgz#85179cb04912502a6255840120c7f9f9e77e5b69"
+  integrity sha512-BabmBVgDj7IrKa/o7UVPQYqoXWvJiyi3d9WWn8lVhdkO8Kxu0gbbb6Tv1XMrAqKbRJEfpBxrCiDki9agjlusRQ==
+  dependencies:
+    "@adonisjs/generic-exceptions" "^3.0.1"
 
 ajv@^6.10.0, ajv@^6.10.2, ajv@^6.5.5:
   version "6.10.2"
@@ -1124,6 +1156,13 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
 
+create-output-stream@0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/create-output-stream/-/create-output-stream-0.0.1.tgz#e0ac31e27defeae0e4f699c0edb9c6558c9fa5ab"
+  integrity sha1-4Kwx4n3v6uDk9pnA7bnGVYyfpas=
+  dependencies:
+    mkdirp "^0.5.1"
+
 cross-env@^5.1.0:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/cross-env/-/cross-env-5.2.1.tgz#b2c76c1ca7add66dc874d11798466094f551b34d"
@@ -1580,6 +1619,11 @@ eslint@^6.5.1:
     text-table "^0.2.0"
     v8-compile-cache "^2.0.3"
 
+esm@^3.0.84:
+  version "3.2.25"
+  resolved "https://registry.yarnpkg.com/esm/-/esm-3.2.25.tgz#342c18c29d56157688ba5ce31f8431fbb795cc10"
+  integrity sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==
+
 espree@^6.1.1:
   version "6.1.2"
   resolved "https://registry.yarnpkg.com/espree/-/espree-6.1.2.tgz#6c272650932b4f91c3714e5e7b5f5e2ecf47262d"
@@ -1884,6 +1928,15 @@ fresh@0.5.2, fresh@^0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/fresh/-/fresh-0.5.2.tgz#3d8cadd90d976569fa835ab1f8e4b23a105605a7"
   integrity sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac=
+
+fs-extra@^6.0.0:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-6.0.1.tgz#8abc128f7946e310135ddc93b98bddb410e7a34b"
+  integrity sha512-GnyIkKhhzXZUWFCaJzvyDLEEgDkPfb4/TPvJCJVuS8MWZgoSsErf++QpiAlDnKFcqhRlm+tIOcencCjyJE6ZCA==
+  dependencies:
+    graceful-fs "^4.1.2"
+    jsonfile "^4.0.0"
+    universalify "^0.1.0"
 
 fs-extra@^7.0.0:
   version "7.0.1"
@@ -3084,6 +3137,11 @@ node-exceptions@^3.0.0:
   resolved "https://registry.yarnpkg.com/node-exceptions/-/node-exceptions-3.0.0.tgz#48b8e10da71370845ef1af583778139527308d11"
   integrity sha512-pFhMAqdN1avrFwtZs66HxYiVnbnH9wjXB4m8IKs5Z9+r7U5voqxT+EDbVkRfge+V7JnkOgKhN4HfKBn1o5g9Wg==
 
+node-exceptions@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/node-exceptions/-/node-exceptions-4.0.1.tgz#70425d17a245c3c00709c72f57c4c20b39ef1a4c"
+  integrity sha512-KJI+FawYOv74x60H6+zrBPfO2vvp9m0pHZi6SH8BBBuc67Irv11DsqY4Le4EBFq1/T5aXFU3hkLrMgtW7RNXxA==
+
 node-pre-gyp@^0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/node-pre-gyp/-/node-pre-gyp-0.11.0.tgz#db1f33215272f692cd38f03238e3e9b47c5dd054"
@@ -4030,7 +4088,7 @@ require-uncached@^1.0.3:
     caller-path "^0.1.0"
     resolve-from "^1.0.0"
 
-resetable@^1.0.3:
+resetable@^1.0.2, resetable@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/resetable/-/resetable-1.0.3.tgz#0b8370bec2b921da04db0b22df8c9640fe399420"
   integrity sha512-AJuhrcU5TVUaM5j0wSjZXlzt0Qb5pai7nDI+klgv7deuSHy5Kom7ovwBt5tMMO3XmJ9YYSCbKhkgDJHL4MEerQ==
@@ -4823,6 +4881,13 @@ upcast@^2.1.1:
   integrity sha512-c+ueM175OVWv9vr1SYA3rI1ao0bxq6Y7l6u5Sac25Hi0yWz9Lz341zt9/sVOa5+7lYcvHMb0xxaacFy/2lVF2w==
   dependencies:
     cross-env "^5.1.0"
+
+upcast@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/upcast/-/upcast-4.0.0.tgz#30c8397a8805be1f40b176f253c78f0f53d108f6"
+  integrity sha512-LS0LmQtEPyyM3Zk4Bb7dNpDVha0xD4Z/Ne3zAqal0hCU/nYjoYU7qic2MPKB+Lu+3h5vKSe2iVqvYnZjmLrAyQ==
+  dependencies:
+    esm "^3.0.84"
 
 uri-js@^4.2.2:
   version "4.2.2"
