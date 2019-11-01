@@ -20,11 +20,15 @@ class GasStationController {
    */
   async index ({ request }) {
     const { latitude, longitude } = request.get()
+    let { fuel } = request.get()
 
+    if (!fuel) fuel = 1
     const gasStations = await GasStation.query()
-      .nearBy(latitude, longitude, 40)
+      .nearBy(latitude, longitude, 10)
       .with('type')
-      .with('fuels')
+      .with('fuels', builder => {
+        builder.where('fuel_id', fuel)
+      })
       .paginate(request.input('page', 1), 10)
 
     return gasStations
