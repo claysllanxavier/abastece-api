@@ -26,10 +26,11 @@ Route
     Route.resource('cities', 'CityController').apiOnly()
     Route.resource('types', 'TypeController').apiOnly()
     Route.resource('gas', 'GasStationController').apiOnly()
+    Route.resource('companies', 'CompanyController').apiOnly()
     /**
      * Others Routes
      */
   })
   .prefix('api/v1')
 
-Route.get('images/:path', 'HomeController.show')
+Route.get('images/:folder/:path', 'HomeController.show')

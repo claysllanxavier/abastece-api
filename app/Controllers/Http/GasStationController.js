@@ -28,6 +28,9 @@ class GasStationController {
 
     const gasStations = await GasStation.query()
       .nearBy(latitude, longitude, distance)
+      .whereHas('fuels', builder => {
+        builder.where('fuel_id', fuel)
+      })
       .with('type')
       .with('fuels', builder => {
         builder.where('fuel_id', fuel)

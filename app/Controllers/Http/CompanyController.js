@@ -8,14 +8,14 @@ const Helpers = use('Helpers')
 const fs = Helpers.promisify(require('fs'))
 const uniqid = require('uniqid')
 
-const Type = use('App/Models/Type')
+const Company = use('App/Models/Company')
 /**
- * Resourceful controller for interacting with types
+ * Resourceful controller for interacting with companies
  */
-class TypeController {
+class CompanyController {
   /**
-   * Show a list of all types.
-   * GET types
+   * Show a list of all companies.
+   * GET companies
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -23,14 +23,14 @@ class TypeController {
    * @param {View} ctx.view
    */
   async index () {
-    const types = await Type.all()
+    const data = await Company.all()
 
-    return types
+    return data
   }
 
   /**
-   * Create/save a new type.
-   * POST types
+   * Create/save a new company.
+   * POST companies
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -44,9 +44,10 @@ class TypeController {
     if (validation.fails()) {
       return response.status(400).json(validation.messages())
     }
-    const data = request.post()
+    const { name } = request.post()
 
-    const type = await Type.create(data)
+    const item = new Company()
+    item.name = name
 
     const image = request.file('image', {
       types: ['image'],
@@ -54,22 +55,22 @@ class TypeController {
     })
 
     if (image) {
-      await image.move(Helpers.tmpPath('uploads/types'), { name: `${uniqid()}.${image.subtype}` })
+      await image.move(Helpers.tmpPath('uploads/companies'), { name: `${uniqid()}.${image.subtype}` })
 
       if (!image.moved()) {
         return image.errors()
       }
 
-      type.image = `types/${image.fileName}`
-      await type.save()
+      item.image = `companies/${image.fileName}`
+      await item.save()
     }
 
-    return type
+    return item
   }
 
   /**
-   * Display a single type.
-   * GET types/:id
+   * Display a single company.
+   * GET companies/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -79,14 +80,14 @@ class TypeController {
   async show ({ params }) {
     const { id } = params
 
-    const type = await Type.findOrFail(id)
+    const item = await Company.findOrFail(id)
 
-    return type
+    return item
   }
 
   /**
-   * Update type details.
-   * PUT or PATCH types/:id
+   * Update company details.
+   * PUT or PATCH companies/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -105,9 +106,9 @@ class TypeController {
 
     const { id } = params
 
-    const type = await Type.findOrFail(id)
+    const item = await Company.findOrFail(id)
 
-    await type.merge(data)
+    await item.merge(data)
 
     const image = request.file('image', {
       types: ['image'],
@@ -115,24 +116,24 @@ class TypeController {
     })
 
     if (image) {
-      await fs.unlink(Helpers.tmpPath(`uploads/types/${type.image}`))
-      await image.move(Helpers.tmpPath('uploads/types'), { name: `${uniqid()}.${image.subtype}` })
+      await fs.unlink(Helpers.tmpPath(`uploads/companies/${item.image}`))
+      await image.move(Helpers.tmpPath('uploads/companies'), { name: `${uniqid()}.${image.subtype}` })
 
       if (!image.moved()) {
         return image.errors()
       }
 
-      type.image = `types/${image.fileName}`
-      await type.save()
+      item.image = `companies/${image.fileName}`
+      await item.save()
     }
 
 
-    return type
+    return item
   }
 
   /**
-   * Delete a type with id.
-   * DELETE types/:id
+   * Delete a company with id.
+   * DELETE companies/:id
    *
    * @param {object} ctx
    * @param {Request} ctx.request
@@ -141,14 +142,14 @@ class TypeController {
   async destroy ({ params, response }) {
     const { id } = params
 
-    const type = await Type.findOrFail(id)
-    if (type.image) {
-      await fs.unlink(Helpers.tmpPath(`uploads/types/${type.image}`))
+    const item = await Company.findOrFail(id)
+    if (item.image) {
+      await fs.unlink(Helpers.tmpPath(`uploads/companies/${item.image}`))
     }
-    await type.delete()
+    await item.delete()
 
     return response.status(204).json(null)
   }
 }
 
-module.exports = TypeController
+module.exports = CompanyController
