@@ -12,6 +12,10 @@ class Company extends Model {
   getUrl ({ image }) {
     return `${Env.get('APP_URL')}/images/${image}`
   }
+
+  franchises () {
+    return this.hasMany('App/Models/Franchise')
+  }
 }
 
 module.exports = Company

@@ -27,6 +27,7 @@ Route
     Route.resource('types', 'TypeController').apiOnly()
     Route.resource('gas', 'GasStationController').apiOnly()
     Route.resource('companies', 'CompanyController').apiOnly()
+    Route.resource('companies/:company/franchises', 'FranchiseController').apiOnly()
     /**
      * Others Routes
      */

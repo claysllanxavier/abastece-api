@@ -3,7 +3,8 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
-
+const Franchise = use('App/Models/Franchise')
+const Company = use('App/Models/Company')
 /**
  * Resourceful controller for interacting with franchises
  */
@@ -17,19 +18,13 @@ class FranchiseController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index ({ request, response, view }) {
-  }
+  async index ({ params }) {
+    const item = await Company.query()
+      .where('id', '=', params.company)
+      .with('franchises')
+      .firstOrFail()
 
-  /**
-   * Render a form to be used for creating a new franchise.
-   * GET franchises/create
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async create ({ request, response, view }) {
+    return item
   }
 
   /**
@@ -40,7 +35,16 @@ class FranchiseController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request, response }) {
+  async store ({ request, params }) {
+    const aux = await Company.findOrFail(params.company)
+
+    const data = request.post()
+
+    const item = await Franchise.create({ ...data, company: aux.company })
+
+    await item.load('company')
+
+    return item
   }
 
   /**
@@ -52,19 +56,16 @@ class FranchiseController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async show ({ params, request, response, view }) {
-  }
+  async show ({ params }) {
+    const { id, company } = params
 
-  /**
-   * Render a form to update an existing franchise.
-   * GET franchises/:id/edit
-   *
-   * @param {object} ctx
-   * @param {Request} ctx.request
-   * @param {Response} ctx.response
-   * @param {View} ctx.view
-   */
-  async edit ({ params, request, response, view }) {
+    await Company.findOrFail(company)
+
+    const item = await Franchise.findOrFail(id)
+
+    await item.load('company')
+
+    return item
   }
 
   /**
@@ -75,7 +76,20 @@ class FranchiseController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async update ({ params, request, response }) {
+  async update ({ params, request }) {
+    const { id, company } = params
+
+    const data = request.post()
+
+    await Company.findOrFail(company)
+
+    const item = await Franchise.findOrFail(id)
+
+    await item.merge(data)
+
+    await item.load('company')
+
+    return item
   }
 
   /**
@@ -86,7 +100,16 @@ class FranchiseController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async destroy ({ params, request, response }) {
+  async destroy ({ params, response }) {
+    const { id, company } = params
+
+    await Company.findOrFail(company)
+
+    const item = await Franchise.findOrFail(id)
+
+    await item.delete()
+
+    return response.status(204).json(null)
   }
 }
 
