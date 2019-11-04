@@ -40,7 +40,7 @@ class FranchiseController {
 
     const data = request.post()
 
-    const item = await Franchise.create({ ...data, company: aux.company })
+    const item = await Franchise.create({ ...data, company_id: aux.id })
 
     await item.load('company')
 
