@@ -58,7 +58,7 @@ class CompanyController {
       await image.move(Helpers.tmpPath('uploads/companies'), { name: `${uniqid()}.${image.subtype}` })
 
       if (!image.moved()) {
-        return image.errors()
+        return image.error()
       }
 
       item.image = `companies/${image.fileName}`
@@ -120,7 +120,7 @@ class CompanyController {
       await image.move(Helpers.tmpPath('uploads/companies'), { name: `${uniqid()}.${image.subtype}` })
 
       if (!image.moved()) {
-        return image.errors()
+        return image.error()
       }
 
       item.image = `companies/${image.fileName}`

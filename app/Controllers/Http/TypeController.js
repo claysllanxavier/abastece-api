@@ -57,7 +57,7 @@ class TypeController {
       await image.move(Helpers.tmpPath('uploads/types'), { name: `${uniqid()}.${image.subtype}` })
 
       if (!image.moved()) {
-        return image.errors()
+        return image.error()
       }
 
       type.image = `types/${image.fileName}`
@@ -119,7 +119,7 @@ class TypeController {
       await image.move(Helpers.tmpPath('uploads/types'), { name: `${uniqid()}.${image.subtype}` })
 
       if (!image.moved()) {
-        return image.errors()
+        return image.error()
       }
 
       type.image = `types/${image.fileName}`
