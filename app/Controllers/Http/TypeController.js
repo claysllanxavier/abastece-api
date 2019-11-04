@@ -44,9 +44,10 @@ class TypeController {
     if (validation.fails()) {
       return response.status(400).json(validation.messages())
     }
-    const data = request.post()
+    const { name } = request.post()
 
-    const type = await Type.create(data)
+    const type = new Type()
+    type.name = name
 
     const image = request.file('image', {
       types: ['image'],
