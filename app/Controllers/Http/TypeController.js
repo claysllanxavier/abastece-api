@@ -117,7 +117,7 @@ class TypeController {
     })
 
     if (image) {
-      await fs.unlink(Helpers.tmpPath(`uploads/types/${type.image}`))
+      await fs.unlink(Helpers.tmpPath(`uploads/${type.image}`))
       await image.move(Helpers.tmpPath('uploads/types'), { name: `${uniqid()}.${image.subtype}` })
 
       if (!image.moved()) {
@@ -146,7 +146,7 @@ class TypeController {
 
     const type = await Type.findOrFail(id)
     if (type.image) {
-      await fs.unlink(Helpers.tmpPath(`uploads/types/${type.image}`))
+      await fs.unlink(Helpers.tmpPath(`uploads/${type.image}`))
     }
     await type.delete()
 
