@@ -62,8 +62,9 @@ class CompanyController {
       }
 
       item.image = `companies/${image.fileName}`
-      await item.save()
     }
+
+    await item.save()
 
     return item
   }
@@ -116,7 +117,7 @@ class CompanyController {
     })
 
     if (image) {
-      await fs.unlink(Helpers.tmpPath(`uploads/companies/${item.image}`))
+      await fs.unlink(Helpers.tmpPath(`uploads/${item.image}`))
       await image.move(Helpers.tmpPath('uploads/companies'), { name: `${uniqid()}.${image.subtype}` })
 
       if (!image.moved()) {
@@ -124,9 +125,9 @@ class CompanyController {
       }
 
       item.image = `companies/${image.fileName}`
-      await item.save()
     }
 
+    await item.save()
 
     return item
   }
@@ -144,7 +145,7 @@ class CompanyController {
 
     const item = await Company.findOrFail(id)
     if (item.image) {
-      await fs.unlink(Helpers.tmpPath(`uploads/companies/${item.image}`))
+      await fs.unlink(Helpers.tmpPath(`uploads/${item.image}`))
     }
     await item.delete()
 

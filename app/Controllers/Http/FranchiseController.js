@@ -22,6 +22,7 @@ class FranchiseController {
     const item = await Company.query()
       .where('id', '=', params.company)
       .with('franchises')
+      .with('franchises.offers')
       .firstOrFail()
 
     return item

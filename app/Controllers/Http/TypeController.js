@@ -61,8 +61,9 @@ class TypeController {
       }
 
       type.image = `types/${image.fileName}`
-      await type.save()
     }
+
+    await type.save()
 
     return type
   }
@@ -123,8 +124,9 @@ class TypeController {
       }
 
       type.image = `types/${image.fileName}`
-      await type.save()
     }
+
+    await type.save()
 
 
     return type

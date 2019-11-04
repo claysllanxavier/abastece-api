@@ -44,10 +44,11 @@ class OfferController {
     // if (validation.fails()) {
     //   return response.status(400).json(validation.messages())
     // }
-    const { regulation } = request.post()
+    const data = request.post()
 
     const item = new Offer()
-    item.regulation = regulation
+    item.regulation = data.regulation
+    item.franchise_id = data.franchise_id
 
     const image = request.file('image', {
       types: ['image'],
@@ -62,8 +63,9 @@ class OfferController {
       }
 
       item.image = `offers/${image.fileName}`
-      await item.save()
     }
+
+    await item.save()
 
     return item
   }
@@ -124,8 +126,9 @@ class OfferController {
       }
 
       item.image = `offers/${image.fileName}`
-      await item.save()
     }
+
+    await item.save()
 
     return item
   }
