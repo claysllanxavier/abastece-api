@@ -31,9 +31,12 @@ class GasStationController {
       .whereHas('fuels', builder => {
         builder.where('fuel_id', fuel)
       })
-      .with('type')
+      .with('type', builder => {
+        builder.select(['id', 'image'])
+      })
       .with('fuels', builder => {
         builder.where('fuel_id', fuel)
+        builder.select(['id'])
       })
       .orderBy(sort, direction)
       .paginate(page, limit)
@@ -89,7 +92,10 @@ class GasStationController {
       .where('id', id)
       .firstOrFail(id)
 
-    await gas.loadMany(['type', 'fuels'])
+    await gas.loadMany({
+      type: builder => builder.select(['id', 'name', 'image']),
+      fuels: builder => builder.select(['id', 'name', 'color'])
+    })
 
     return gas
   }

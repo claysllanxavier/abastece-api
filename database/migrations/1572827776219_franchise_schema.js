@@ -12,10 +12,12 @@ class FranchiseSchema extends Schema {
       table.decimal('latitude', 9, 6).notNullable()
       table.decimal('longitude', 9, 6).notNullable()
       table.string('phone', 15).notNullable()
+      table.string('business hours', 150).notNullable()
       table.integer('company_id').unsigned().index().notNullable()
       table.foreign('company_id').references('id').inTable('companies').onDelete('CASCADE')
       table.integer('city_id').unsigned().index().notNullable()
       table.foreign('city_id').references('id').inTable('cities').onDelete('RESTRICT')
+      table.integer('order').notNullable().unique()
       table.timestamps()
     })
   }
