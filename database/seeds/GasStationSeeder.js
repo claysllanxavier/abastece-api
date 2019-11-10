@@ -20,7 +20,10 @@ class GasStationSeeder {
   async run () {
     const file = await Drive.get(Helpers.publicPath('data/gas.json'))
     const items = JSON.parse(file.toString())
-    await Database.raw('TRUNCATE TABLE gas_stations')
+    await GasStation
+      .query()
+      .where('id', '>', 0)
+      .delete()
     await Database.raw('ALTER TABLE gas_stations AUTO_INCREMENT = 1')
 
     const insertData = async () => Promise.all(items.map(async item => {
