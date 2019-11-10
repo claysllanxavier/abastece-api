@@ -12,6 +12,7 @@ class GasFuelSchema extends Schema {
       table.integer('fuel_id').unsigned().index().notNullable()
       table.foreign('fuel_id').references('id').inTable('fuels').onDelete('CASCADE')
       table.decimal('price', 10, 3)
+      table.date('dt_updated')
       table.timestamps()
     })
   }

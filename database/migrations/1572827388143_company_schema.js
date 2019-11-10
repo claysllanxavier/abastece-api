@@ -9,6 +9,7 @@ class CompanySchema extends Schema {
       table.increments()
       table.string('name').notNullable()
       table.string('image', 255).notNullable()
+      table.integer('order').notNullable().unique()
       table.timestamps()
     })
   }
