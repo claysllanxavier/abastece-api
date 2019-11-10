@@ -21,7 +21,7 @@ class GasStationSeeder {
     const file = await Drive.get(Helpers.publicPath('data/gas.json'))
     const items = JSON.parse(file.toString())
     await Database.raw('TRUNCATE gas_stations CASCADE')
-    // await Database.raw('ALTER TABLE gas_stations AUTO_INCREMENT = 1')
+    await Database.raw('ALTER TABLE gas_stations AUTO_INCREMENT = 1')
 
     const insertData = async () => Promise.all(items.map(async item => {
       const [lat, long] = item.LOCALIZACAO.split(' ')
