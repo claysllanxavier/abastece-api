@@ -26,7 +26,7 @@ class GasStation extends Model {
     return this.belongsToMany('App/Models/Fuel', 'gas_id', 'fuel_id')
       .pivotTable('gas_fuels')
       .withTimestamps()
-      .withPivot(['price'])
+      .withPivot(['price', 'dt_updated'])
   }
 }
 
