@@ -23,6 +23,7 @@ class FranchiseController {
       .where('id', '=', params.company)
       .with('franchises')
       .with('franchises.offers')
+      .orderBy('order')
       .firstOrFail()
 
     return item

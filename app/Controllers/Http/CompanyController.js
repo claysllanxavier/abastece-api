@@ -23,7 +23,9 @@ class CompanyController {
    * @param {View} ctx.view
    */
   async index () {
-    const data = await Company.all()
+    const data = await Company.query()
+      .orderBy('order')
+      .fetch()
 
     return data
   }
