@@ -39,17 +39,18 @@ class CompanyController {
    * @param {Response} ctx.response
    */
   async store ({ request, response }) {
-    const rules = { name: 'required|max:40' }
+    const rules = {
+      name: 'required|max:40',
+      latitude: 'required',
+      longitude: 'required',
+      city_id: 'required|integer'  }
 
     const validation = await validateAll(request.all(), rules)
 
     if (validation.fails()) {
       return response.status(400).json(validation.messages())
     }
-    const { name } = request.post()
-
-    const item = new Company()
-    item.name = name
+    const data = request.post()
 
     const image = request.file('image', {
       types: ['image'],
@@ -63,10 +64,10 @@ class CompanyController {
         return image.error()
       }
 
-      item.image = `companies/${image.fileName}`
+      data.image = `companies/${image.fileName}`
     }
 
-    await item.save()
+    const item = await Company.create(data)
 
     return item
   }
@@ -84,6 +85,8 @@ class CompanyController {
     const { id } = params
 
     const item = await Company.findOrFail(id)
+
+    await item.load('offers')
 
     return item
   }

@@ -7,10 +7,9 @@ class OfferSchema extends Schema {
   up () {
     this.create('offers', table => {
       table.increments()
-      table.text('regulation').nullable()
-      table.string('image', 255).nullable()
-      table.integer('franchise_id').unsigned().index().notNullable()
-      table.foreign('franchise_id').references('id').inTable('franchises').onDelete('CASCADE')
+      table.string('image', 255).notNullable()
+      table.integer('company_id').unsigned().index().notNullable()
+      table.foreign('company_id').references('id').inTable('companies').onDelete('CASCADE')
       table.timestamps()
     })
   }

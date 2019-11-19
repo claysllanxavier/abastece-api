@@ -13,8 +13,8 @@ class Company extends Model {
     return `${Env.get('APP_URL')}/images/${image}`
   }
 
-  franchises () {
-    return this.hasMany('App/Models/Franchise')
+  offers () {
+    return this.hasMany('App/Models/Offer')
   }
 }
 

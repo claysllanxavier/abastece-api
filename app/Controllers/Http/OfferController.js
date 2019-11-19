@@ -3,7 +3,7 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
-// const { validateAll } = use('Validator')
+const { validateAll } = use('Validator')
 const Helpers = use('Helpers')
 const fs = Helpers.promisify(require('fs'))
 const uniqid = require('uniqid')
@@ -36,19 +36,18 @@ class OfferController {
    * @param {Request} ctx.request
    * @param {Response} ctx.response
    */
-  async store ({ request }) {
-    // const rules = { regulation: 'required|max:40' }
+  async store ({ request, response }) {
+    const rules = { company_id: 'required|integer' }
 
-    // const validation = await validateAll(request.all(), rules)
+    const validation = await validateAll(request.all(), rules)
 
-    // if (validation.fails()) {
-    //   return response.status(400).json(validation.messages())
-    // }
-    const data = request.post()
+    if (validation.fails()) {
+      return response.status(400).json(validation.messages())
+    }
+    const {company_id }  = request.post()
 
     const item = new Offer()
-    item.regulation = data.regulation
-    item.franchise_id = data.franchise_id
+    item.company_id = company_id
 
     const image = request.file('image', {
       types: ['image'],
