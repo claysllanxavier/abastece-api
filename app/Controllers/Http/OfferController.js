@@ -95,13 +95,13 @@ class OfferController {
    * @param {Response} ctx.response
    */
   async update ({ params, request }) {
-    // const rules = { name: 'required|max:40' }
+    const rules = { company_id: 'required|integer' }
 
-    // const validation = await validateAll(request.all(), rules)
+    const validation = await validateAll(request.all(), rules)
 
-    // if (validation.fails()) {
-    //   return response.status(400).json(validation.messages())
-    // }
+    if (validation.fails()) {
+      return response.status(400).json(validation.messages())
+    }
 
     const data = request.post()
 
@@ -117,7 +117,7 @@ class OfferController {
     })
 
     if (image) {
-      await fs.unlink(Helpers.tmpPath(`uploads/offers/${item.image}`))
+      await fs.unlink(Helpers.tmpPath(`uploads/${item.image}`))
       await image.move(Helpers.tmpPath('uploads/offers'), { name: `${uniqid()}.${image.subtype}` })
 
       if (!image.moved()) {
@@ -145,7 +145,7 @@ class OfferController {
 
     const item = await Offer.findOrFail(id)
     if (item.image) {
-      await fs.unlink(Helpers.tmpPath(`uploads/offers/${item.image}`))
+      await fs.unlink(Helpers.tmpPath(`uploads/${item.image}`))
     }
     await item.delete()
 
