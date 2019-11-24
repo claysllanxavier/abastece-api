@@ -27,7 +27,7 @@ class GasStationController {
     const full = request.input('full', false)
     const [sort, direction] = request.input('sort', 'distance:asc').split(':')
 
-    let query = await GasStation.query()
+    let query = GasStation.query()
       .nearBy(latitude, longitude, distance)
       .whereHas('fuels', builder => {
         builder.where('fuel_id', fuel)
@@ -45,7 +45,7 @@ class GasStationController {
       })
     }
 
-    const gasStations = query.orderBy(sort, direction).paginate(page, limit)
+    const gasStations = await query.orderBy(sort, direction).paginate(page, limit)
 
     return gasStations
   }
