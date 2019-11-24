@@ -24,9 +24,10 @@ class GasStationController {
     const fuel = request.input('fuel', 1)
     const limit = request.input('limit', 10)
     const distance = request.input('distance', 10)
+    const full = request.input('full', false)
     const [sort, direction] = request.input('sort', 'distance:asc').split(':')
 
-    const gasStations = await GasStation.query()
+    let query = await GasStation.query()
       .nearBy(latitude, longitude, distance)
       .whereHas('fuels', builder => {
         builder.where('fuel_id', fuel)
@@ -34,12 +35,17 @@ class GasStationController {
       .with('type', builder => {
         builder.select(['id', 'image'])
       })
-      .with('fuels', builder => {
+
+    if (full) {
+      query = query.with('fuels')
+    } else {
+      query = query.with('fuels', builder => {
         builder.where('fuel_id', fuel)
         builder.select(['id'])
       })
-      .orderBy(sort, direction)
-      .paginate(page, limit)
+    }
+
+    const gasStations = query.orderBy(sort, direction).paginate(page, limit)
 
     return gasStations
   }
