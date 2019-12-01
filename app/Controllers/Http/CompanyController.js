@@ -22,9 +22,12 @@ class CompanyController {
    * @param {Response} ctx.response
    * @param {View} ctx.view
    */
-  async index () {
+  async index ({ request }) {
+    const limit = request.input('limit', 10)
+
     const data = await Company.query()
       .orderBy('order')
+      .limit(limit)
       .fetch()
 
     return data
@@ -43,7 +46,8 @@ class CompanyController {
       name: 'required|max:40',
       latitude: 'required',
       longitude: 'required',
-      city_id: 'required|integer'  }
+      city_id: 'required|integer'
+    }
 
     const validation = await validateAll(request.all(), rules)
 
