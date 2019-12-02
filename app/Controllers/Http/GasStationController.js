@@ -41,11 +41,18 @@ class GasStationController {
     } else {
       query = query.with('fuels', builder => {
         builder.where('fuel_id', fuel)
-        builder.select(['id'])
+        builder.select(['id', 'color'])
+        if (sort === 'price') {
+          builder.orderBy(sort, direction)
+        }
       })
     }
 
-    const gasStations = await query.orderBy(sort, direction).paginate(page, limit)
+    if (sort === 'distance') {
+      query.orderBy(sort, direction)
+    }
+
+    const gasStations = await query.paginate(page, limit)
 
     return gasStations
   }
