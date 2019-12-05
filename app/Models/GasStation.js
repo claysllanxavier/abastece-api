@@ -14,7 +14,7 @@ class GasStation extends Model {
     * sin(radians(latitude))))`
 
     return query
-      .select('*', Database.raw(`${haversine} as distance`))
+      .select(Database.raw(`${haversine} as distance`))
       .whereRaw(`${haversine} < ${distance}`)
   }
 
